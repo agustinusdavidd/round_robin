@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1673229691 source:c:\users\user\downloads\round_robin\round_robin-main\roundrobinalgorithm\main.cpp
+	"roundRobin.h"
+
+1673229807 c:\users\user\downloads\round_robin\round_robin-main\roundrobinalgorithm\roundrobin.h
+	<iostream>
+
+1673229807 source:c:\users\user\downloads\round_robin\round_robin-main\roundrobinalgorithm\roundrobin.cpp
+	"roundRobin.h"
+
