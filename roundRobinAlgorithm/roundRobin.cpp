@@ -90,16 +90,28 @@ void mergeQueue(antrian& q1, antrian& q2) {
         enqueue(q1, p);
     }
 }
-
+void showTask(antrian h, antrian m, antrian l, adr p, int time){
+    cout << "================================================================\n";
+    cout << "most recent task id=" << p->info.id << endl;
+    cout << "High : \n"; show(h); cout << "\nMid : \n";  show(m);
+    cout << "\nLow : \n"; show(l);
+    cout << "\ntime=" << time;
+    cout << endl;
+    cout << "----------------------------------------------------------------\n";
+}
 void executeTaskPrio(antrian& h, antrian& m, antrian& l, int quantum, int prioUp) {
-    //dibuat oleh nadine
+    //dibuat oleh nadine dan david
     int time = 0;
     int totalTAT = 0; //turn around time
     int totalWT = 0; //wait time
     int taskCount = 0;
     int constPrio = prioUp;
     adr p;
-    while (head(h) != nil) {
+    while (head(h) == nil && !(isEmpty(m) && isEmpty(l))) {
+        mergeQueue(h, m);
+        mergeQueue(m, l);
+    }
+    while (!isEmpty(h)) {
         dequeue(h, p);
         updateWaitTime(h, time);
         updateWaitTime(m, time);
@@ -114,21 +126,16 @@ void executeTaskPrio(antrian& h, antrian& m, antrian& l, int quantum, int prioUp
             time += info(p).burstTime;
             prioUp = prioUp - p->info.burstTime;
             info(p).turnAroundTime = time;
+            cout << "----------------------------------------------------------------\n";
             cout << "executed tat=" << info(p).turnAroundTime << " wt=" << info(p).waitTime << " id=" << info(p).id << endl;
             totalTAT += info(p).turnAroundTime;
             totalWT += info(p).waitTime;
             taskCount++;
         }
-        cout << "most recent task id=" << p->info.id << endl << endl;
-        cout << "====================================================\n";
-        cout << "High : \n"; show(h); cout << "\nMid : \n";  show(m);
-        cout << "\nLow : \n"; show(l);
-        cout << "====================================================\n";
-        cout << "\ntime=" << time;
-        cout << endl;
+        showTask(h, m, l, p, time);
 
         cout << "prioUp time left : " << prioUp << endl;
-        if (prioUp <= 0 || isEmpty(h)) {
+        while ((prioUp <= 0 || isEmpty(h)) && !(isEmpty(m) && isEmpty(l))) {
             if (isEmpty(h)) {
                 prioUp -= constPrio;
             }
@@ -138,8 +145,12 @@ void executeTaskPrio(antrian& h, antrian& m, antrian& l, int quantum, int prioUp
             mergeQueue(h, m);
             mergeQueue(m, l);
         }
+        cout << "================================================================\n";
     }
-    cout << totalTAT << " " << totalWT << " " << taskCount << endl;
+    cout << "Total Task: " << taskCount << endl;
+    cout << "Total Turn Around Time: " << totalTAT << endl;
+    cout << "Total Wait Time: " << totalWT << endl;
     cout << "Average Wait Time: " << float(totalWT) / float(taskCount) << endl;
     cout << "Average Turn Around Time: " << float(totalTAT) / float(taskCount) << endl;
+    cout << "================================================================\n";
 }

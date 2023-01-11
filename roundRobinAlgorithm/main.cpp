@@ -43,8 +43,6 @@ int main()
     cout << "\nLow : \n"; show(low);
     cout << "====================================================\n";
     cout << "\n";
-    //executeTask(high, quantum);
     executeTaskPrio(high, mid, low, quantum, prioUp);
-    cout << "Hello world!" << endl;
     return 0;
 }

@@ -27,8 +27,8 @@ void createElement(infotype newTask, adr& task);
 void enqueue(antrian& q, adr task);
 void dequeue(antrian& q, adr& task);
 void show(antrian q);
-void executeTask(antrian q, int quantum);
 void updateWaitTime(antrian &q, int time);
 void mergeQueue(antrian &q1, antrian &q2);
 void executeTaskPrio(antrian &h, antrian &m, antrian &l, int quantum, int prioUp);
+void showTask(antrian h, antrian m, antrian l, adr p, int time);
 #endif // ROUNDROBIN_H_INCLUDED
